@@ -34,6 +34,7 @@ public class TelaPrincipalCliente extends javax.swing.JFrame {
         menuAtualizarCadastro = new javax.swing.JMenu();
         atualizarCadastro = new javax.swing.JMenuItem();
         menuServicos = new javax.swing.JMenu();
+        verStatus = new javax.swing.JMenuItem();
         menuSair = new javax.swing.JMenu();
         opcoesSair = new javax.swing.JMenuItem();
 
@@ -68,6 +69,15 @@ public class TelaPrincipalCliente extends javax.swing.JFrame {
         jMenuBar1.add(menuAtualizarCadastro);
 
         menuServicos.setText("VER SERVIÇOS");
+
+        verStatus.setText("Ver Status");
+        verStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verStatusActionPerformed(evt);
+            }
+        });
+        menuServicos.add(verStatus);
+
         jMenuBar1.add(menuServicos);
 
         menuSair.setText("OPÇÕES");
@@ -115,6 +125,12 @@ public class TelaPrincipalCliente extends javax.swing.JFrame {
         desktop.add(ta);
     }//GEN-LAST:event_atualizarCadastroActionPerformed
 
+    private void verStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verStatusActionPerformed
+        TelaVerServico tvs = new TelaVerServico();
+        tvs.setVisible(true);
+        desktop.add(tvs);
+    }//GEN-LAST:event_verStatusActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -158,5 +174,6 @@ public class TelaPrincipalCliente extends javax.swing.JFrame {
     private javax.swing.JMenu menuSair;
     private javax.swing.JMenu menuServicos;
     private javax.swing.JMenuItem opcoesSair;
+    private javax.swing.JMenuItem verStatus;
     // End of variables declaration//GEN-END:variables
 }

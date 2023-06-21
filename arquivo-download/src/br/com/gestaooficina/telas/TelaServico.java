@@ -34,14 +34,41 @@ public class TelaServico extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             }
             pst.executeUpdate();
-
             JOptionPane.showMessageDialog(null, "Ordem de Serviço gerada");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
-   
+    public void emitirStatus(String sql) {
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtId.getText());
+            pst.setString(2, cboStatus.getSelectedItem().toString());
+            if ((txtId.getText().isEmpty()) || (cboStatus.getSelectedItem().equals(" "))) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+            }
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Status atualizado");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void atualizarStatus(String sql) {
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtId.getText());
+            pst.setString(2, cboStatus.getSelectedItem().toString());
+            if ((txtId.getText().isEmpty()) || (cboStatus.getSelectedItem().equals(" "))) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+            }
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Status atualizado");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,6 +92,9 @@ public class TelaServico extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        cboStatus = new javax.swing.JComboBox<>();
+        btnCadastrarStatus = new javax.swing.JButton();
+        btnAtualizarStatus = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -89,8 +119,6 @@ public class TelaServico extends javax.swing.JInternalFrame {
 
         jLabel7.setText("ID OS");
 
-        txtId.setEditable(false);
-
         jButton2.setText("ALTERAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +129,22 @@ public class TelaServico extends javax.swing.JInternalFrame {
         jButton3.setText("PESQUISAR");
 
         jButton4.setText("DELETAR");
+
+        cboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Na fila", "Em processamento", "finalizado" }));
+
+        btnCadastrarStatus.setText("ENVIAR STATUS");
+        btnCadastrarStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCadastrarStatusMouseClicked(evt);
+            }
+        });
+
+        btnAtualizarStatus.setText("ATUALIZAR STATUS");
+        btnAtualizarStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAtualizarStatusMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,13 +171,22 @@ public class TelaServico extends javax.swing.JInternalFrame {
                             .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                            .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(82, 82, 82))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(223, 223, 223)))
+                .addContainerGap(13, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCadastrarStatus)
+                    .addComponent(btnAtualizarStatus))
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,8 +195,6 @@ public class TelaServico extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
@@ -154,7 +205,19 @@ public class TelaServico extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnAtualizarStatus)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCadastrarStatus)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -175,8 +238,21 @@ public class TelaServico extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnCadastrarStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarStatusMouseClicked
+        String sql = "insert into status (fkIdServico, etapas) value (?, ?)";
+        emitirStatus(sql);
+    }//GEN-LAST:event_btnCadastrarStatusMouseClicked
+
+    private void btnAtualizarStatusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAtualizarStatusMouseClicked
+        String sql = "update status set etapas = ? where id = ?";
+        atualizarStatus(sql);
+    }//GEN-LAST:event_btnAtualizarStatusMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizarStatus;
+    private javax.swing.JButton btnCadastrarStatus;
+    private javax.swing.JComboBox<String> cboStatus;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

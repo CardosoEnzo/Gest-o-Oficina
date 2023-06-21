@@ -26,29 +26,10 @@ public class TelaCadastro extends javax.swing.JFrame {
         conexao = ModuloConexao.conector();
         initComponents();
     }
+    
+    
 
-    public void cadastrarOficina(String sql) {
-        try {
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtCpf.getText());
-            pst.setString(2, txtNome.getText());
-            pst.setString(3, txtSobrenome.getText());
-            pst.setString(4, txtEmail.getText());
-            pst.setString(5, txtTelefone.getText());
-            pst.setString(6, txtSenha.getText());
-
-            if ((txtCpf.getText().isEmpty()) || (txtNome.getText().isEmpty()) || (txtSobrenome.getText().isEmpty()) || (txtEmail.getText().isEmpty()) || (txtTelefone.getText().isEmpty()) || (txtSenha.getText().isEmpty())) {
-                JOptionPane.showMessageDialog(null, "Preencha todos os campos");
-            } else {
-                int adicionado = pst.executeUpdate();
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void cadastrarCliente(String sql) {
+    public void cadastroPadrao(String sql) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCpf.getText());
@@ -259,7 +240,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     private void btnCadastrarOficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarOficinaMouseClicked
         String sql = "INSERT INTO FUNCIONARIO (CPF, NOME, SOBRENOME, EMAIL, TELEFONE, SENHA) VALUES (?,?,?,?,?,?)";
-        cadastrarOficina(sql);
+        cadastroPadrao(sql);
     }//GEN-LAST:event_btnCadastrarOficinaMouseClicked
 
     private void btnCadastrarOficinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarOficinaActionPerformed
@@ -272,7 +253,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     private void btnCadastrarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarClienteMouseClicked
         String sql = "INSERT INTO CLIENTE (CPF, NOME, SOBRENOME, EMAIL, TELEFONE, SENHA) VALUES (?,?,?,?,?,?)";
-        cadastrarCliente(sql);
+        cadastroPadrao(sql);
     }//GEN-LAST:event_btnCadastrarClienteMouseClicked
 
     /**

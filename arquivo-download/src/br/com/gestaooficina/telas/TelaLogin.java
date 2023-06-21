@@ -27,7 +27,7 @@ public class TelaLogin extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void loginOficina(String sql) {
+    public void loginPadrao(String sql, TelaPrincipal telaPrincipalOficina) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCpf.getText());
@@ -38,8 +38,8 @@ public class TelaLogin extends javax.swing.JFrame {
             if (rs.next()) {
                 cpf = rs.getString(2);
                 senha = rs.getString(7);
-                TelaPrincipal telap = new TelaPrincipal();
-                telap.setVisible(true);
+                telaPrincipalOficina = new TelaPrincipal();
+                telaPrincipalOficina.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Login ou Senha incorretos");
             }
@@ -50,7 +50,7 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }
 
-    public void loginCliente(String sql) {
+    public void loginPadrao(String sql, TelaPrincipalCliente telaPrincipalCliente) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCpf.getText());
@@ -61,7 +61,7 @@ public class TelaLogin extends javax.swing.JFrame {
             if (rs.next()) {
                 cpf = rs.getString(2);
                 senha = rs.getString(7);
-                TelaPrincipalCliente telaPrincipalCliente = new TelaPrincipalCliente();
+                telaPrincipalCliente = new TelaPrincipalCliente();
                 telaPrincipalCliente.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Login ou Senha incorretos");
@@ -171,7 +171,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEntrarOficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarOficinaMouseClicked
         String sql = "SELECT * FROM FUNCIONARIO WHERE CPF=? and SENHA=?";
-        loginOficina(sql);
+        TelaPrincipal telaPrincipalOficina = new TelaPrincipal();
+        loginPadrao(sql, telaPrincipalOficina);
     }//GEN-LAST:event_btnEntrarOficinaMouseClicked
 
     private void btnEntrarOficinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarOficinaActionPerformed
@@ -180,7 +181,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEntrarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntrarClienteMouseClicked
         String sql = "SELECT * FROM CLIENTE WHERE CPF=? and SENHA=?";
-        loginCliente(sql);
+        TelaPrincipalCliente telaPrincipalCliente = new TelaPrincipalCliente();
+        loginPadrao(sql, telaPrincipalCliente);
     }//GEN-LAST:event_btnEntrarClienteMouseClicked
 
     /**

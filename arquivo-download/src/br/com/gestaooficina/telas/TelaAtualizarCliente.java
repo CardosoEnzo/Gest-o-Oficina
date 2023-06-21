@@ -29,8 +29,7 @@ public class TelaAtualizarCliente extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    private void alterar() {
-        String sql = "update cliente set nome=?, sobrenome=?, email=?, telefone=?, senha=? where cpf=?";
+    public void alterar(String sql) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtNome.getText());
@@ -168,11 +167,12 @@ public class TelaAtualizarCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarActionPerformed
-        
+
     }//GEN-LAST:event_alterarActionPerformed
 
     private void alterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alterarMouseClicked
-       alterar();
+        String sql = "update cliente set nome=?, sobrenome=?, email=?, telefone=?, senha=? where cpf=?";
+        alterar(sql);
     }//GEN-LAST:event_alterarMouseClicked
 
 

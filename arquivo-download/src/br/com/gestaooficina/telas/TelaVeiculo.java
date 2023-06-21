@@ -57,8 +57,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         }
     }
 
-    public void pesquisar() {
-        String sql = "select * from veiculo where placa = ?";
+    public void pesquisar(String sql) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtPlaca.getText());
@@ -74,12 +73,11 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         }
 
     }
-    
-    public void deletar() {
+
+    public void deletar(String sql) {
         int confirma = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar?", "ATENÇÃO", JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_OPTION) {
             try {
-                String sql = "DELETE FROM VEICULO WHERE placa=?";
                 pst = conexao.prepareStatement(sql);
                 pst.setString(1, txtPlaca.getText());
                 int apagado = pst.executeUpdate();
@@ -221,11 +219,13 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        pesquisar();
+        String sql = "select * from veiculo where placa = ?";
+        pesquisar(sql);
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
-        deletar();
+        String sql = "DELETE FROM VEICULO WHERE placa=?";
+        deletar(sql);
     }//GEN-LAST:event_btnDeletarActionPerformed
 
 

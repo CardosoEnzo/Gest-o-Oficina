@@ -51,12 +51,35 @@ valor varchar(50),
 primary key(id)
 )default char set utf8;
 
-alter table ordem_servico drop column tipo_veiculo;
+alter table ordem_servico modify valor float(10.02) not null;
 
 create table servico_veiculo(
 id int auto_increment not null,
 primary key(id)
 )default char set utf8;
+
+create table servico_status(
+id int auto_increment not null,
+primary key(id)
+)default char set utf8;
+
+create table status(
+id int auto_increment not null,
+etapas enum ('Na fila', 'Em processamento', 'finalizado'),
+primary key(id)
+) default char set utf8;
+
+/*Modificações*/
+alter table status add column fkIdServico int not null;
+alter table status add foreign key (fkIdServico) references ordem_servico (id);
+
+/*Modificações*/
+alter table servico_status add column fkIdServico int not null;
+alter table servico_status add foreign key (fkIdServico) references ordem_servico (id);
+
+/*Modificações*/
+alter table servico_status add column fkIdStatus int not null;
+alter table servico_status add foreign key (fkIdServico) references ordem_servico (id);
 
 /*Modificações*/
 alter table servico_veiculo add column fkIdServico int not null;
@@ -90,6 +113,16 @@ select * from ordem_servico;
 
 select * from servico_veiculo;
 
-select * from servico_veiculo inner join ordem_servico on ordem_servico.id =servico_veiculo.fkIdSevico inner join veiculo on veiculo.id = servico_veiculo.fkIdVeiculo;
+select * from status;
+
+select * from servico_status;
+
+select * from ordem_servico inner join veiculo on ordem_servico.id =veiculo.id inner join cliente on cliente.id = veiculo.fkIdCliente;
 
 insert into servico_veiculo (fkIdServico, fkIdVeiculo)(select id, fkIdVeiculo from ordem_servico);
+
+insert into servico_status (fkIdServico, fkIdStatus)(select id, fkIdVeiculo from ordem_servico);
+
+update status set etapas = 'finalizado' where id = 2;
+
+insert into status (etapas, fkIdServico) value ('na fila', 4);

@@ -30,8 +30,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public void cadastrarPessoa(String sql) {
-        sql = "INSERT INTO CLIENTE (CPF, NOME, SOBRENOME, EMAIL, TELEFONE, SENHA) VALUES (?,?,?,?,?,?)";
+    public void cadastrar(String sql) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCpf.getText());
@@ -52,11 +51,10 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         }
     }
 
-    public void deletar() {
+    public void deletar(String sql) {
         int confirma = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar?", "ATENÇÃO", JOptionPane.YES_NO_OPTION);
         if (confirma == JOptionPane.YES_OPTION) {
             try {
-                String sql = "DELETE FROM CLIENTE WHERE CPF=?";
                 pst = conexao.prepareStatement(sql);
                 pst.setString(1, txtCpf.getText());
                 int apagado = pst.executeUpdate();
@@ -69,8 +67,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         }
     }
 
-    private void alterar() {
-        String sql = "update cliente set nome=?, sobrenome=?, email=?, telefone=?, senha=? where cpf=?";
+    private void alterar(String sql) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtNome.getText());
@@ -93,15 +90,14 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         }
     }
 
-    private void pesquisar() {
-        String sql = "select * from cliente where cpf = ?";
+    private void pesquisar(String sql) {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtCpf.getText());
             rs = pst.executeQuery();
             if (rs.next()) {
                 txtId.setText(rs.getString(1));
-                txtNome.setText(rs.getString(3)); 
+                txtNome.setText(rs.getString(3));
                 txtSobrenome.setText(rs.getString(4));
                 txtEmail.setText(rs.getString(5));
                 txtTelefone.setText(rs.getString(6));
@@ -306,7 +302,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
     private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
         String sql = "INSERT INTO CLIENTE (CPF, NOME, SOBRENOME, EMAIL, TELEFONE, SENHA) VALUES (?,?,?,?,?,?)";
-        cadastrarPessoa(sql);
+        cadastrar(sql);
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
@@ -314,15 +310,18 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDeletarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeletarMouseClicked
-        deletar();
+        String sql = "DELETE FROM CLIENTE WHERE CPF=?";
+        deletar(sql);
     }//GEN-LAST:event_btnDeletarMouseClicked
 
     private void btnAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAlterarMouseClicked
-        alterar();
+        String sql = "update cliente set nome=?, sobrenome=?, email=?, telefone=?, senha=? where cpf=?";
+        alterar(sql);
     }//GEN-LAST:event_btnAlterarMouseClicked
 
     private void btnPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarMouseClicked
-        pesquisar();
+        String sql = "select * from cliente where cpf = ?";
+        pesquisar(sql);
     }//GEN-LAST:event_btnPesquisarMouseClicked
 
 
